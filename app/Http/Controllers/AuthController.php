@@ -2,35 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
-use Symfony\Contracts\Service\Attribute\Required;
+use App\Models\Pengguna;
 
 class AuthController extends Controller
 {
-    public function showlogin(){
+    public function showlogin()
+    {
         return view('login');
     }
 
-    public function login(Request $request){
-       $credentials = $request->validate([
-        'email' => 'required|email',
-        'password' => 'required'
-       ]);
 
-       if(Auth::attempt($credentials)){
-         $request->sesion()->regenerate();
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
 
-         return redirect('/');
-       }
-       return back()->withErrors([
-        'email' => 'Email/password salah'
-    ]);
+            'email' => 'required|email',
 
-    } 
-    
+            'password' => 'required'
+
+        ]);
+
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect('/')
+            ->with('success_login', 'Berhasil login!')
+            ;
+        }
+        return back()->withErrors([
+
+            'email' => 'Email/password salah'
+
+        ]);
+    }
+
+
     public function logout(Request $request)
     {
         Auth::logout();
@@ -42,27 +52,47 @@ class AuthController extends Controller
         return redirect('/');
     }
 
+
+
+
+
+
     public function redirectGoogle()
     {
         return Socialite::driver('google')->redirect();
     }
-    
+
+
     public function callbackGoogle()
     {
         $googleUser = Socialite::driver('google')->user();
-    
-        $user = User::where('email', $googleUser->email)->first();
-    
+
+
+        $user = Pengguna::where(
+            'email',
+            $googleUser->email
+        )->first();
+
+
+
         if (!$user) {
-            $user = User::create([
+            $user = Pengguna::create([
+
                 'name' => $googleUser->name,
+
                 'email' => $googleUser->email,
+
+                'google_id' => $googleUser->id,
+
+                'avatar' => $googleUser->avatar,
+
                 'password' => bcrypt('google_login'),
+
             ]);
         }
-    
-        Auth::login($user);
-    
+
+               Auth::login($user);
+
         return redirect('/');
     }
 }

@@ -2,13 +2,15 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LocationsController;
+use App\Http\Controllers\SuitesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LocationsController::class, 'index']);
 
-Route::get('/suites', function () {
-    return view('suites');
-});
+Route::get('/suites', [SuitesController::class, 'index'])
+    ->middleware('checklogin');
+
+
 
 Route::get('/login', [AuthController::class, 'showLogin'])
     ->name('login');
