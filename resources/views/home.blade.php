@@ -31,8 +31,9 @@
             </p>
 
           
-
+                <form action="{{ route('locations.index') }}" method="GET">
             <div class="mt-14 flex items-center gap-5">
+                <div class="relative">
 
                 <div
                     class="w-[650px]
@@ -57,13 +58,45 @@
 
                     <!-- INPUT -->
 
-                    <input type="text" placeholder="Search luxury hotels..."
+                    <input type="text" name="pencarian" value="{{ request('pencarian') }}" placeholder="Search luxury hotels..."
                         class="flex-1 h-full bg-transparent outline-none px-5 text-[20px] text-zinc-800 placeholder:text-zinc-500">
 
                 </div>
 
-                <!-- BUTTON -->
+            </form>
 
+                @if(request('pencarian'))
+
+                <div class="absolute top-[90px] left-0 w-full bg-white rounded-[35px] shadow-2xl overflow-hidden z-50">
+                    @forelse ($lokasi_hotel as $hotel)
+
+                    <div class="flex items-center gap-5 px-6 py-5 border-b hover:bg-zinc-100 transition duration-300 cursor-pointer">
+                        <img src="{{ asset($hotel['image']) }}" alt="" 
+                        class="w-28 h-20 rounded-2xl object-cover">
+
+                        <h1 class="font-semibold text-lg">
+                            {{ $hotel['kota'] }}
+                        </h1>
+        
+                        <p class="text-zinc-500 text-sm">
+                            {{ $hotel['title'] }}
+                        </p>
+                    </div>
+
+                   
+                        
+                    @empty
+                    <div class="px-6 py-4 text-red-500">
+
+                        Location not found
+        
+                    </div>
+                    @endforelse
+                </div>
+                @endif
+
+                {{-- <!-- BUTTON -->
+ 
                 <button
                     class="w-[220px]
                        h-[75px]
@@ -79,11 +112,12 @@
 
                     Search
 
-                </button>
+                </button>  --}}
 
             </div>
-
+    
         </div>
+    </div>
 
     </div>
 

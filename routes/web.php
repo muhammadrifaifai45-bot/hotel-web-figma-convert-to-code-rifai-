@@ -5,12 +5,15 @@ use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\SuitesController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [LocationsController::class, 'index']);
+Route::get('/', [LocationsController::class, 'index'])->name('locations.index');
 
 Route::get('/suites', [SuitesController::class, 'index'])
     ->middleware('checklogin');
 
+Route::get('/register',[AuthController::class, 'showregister'])
+->name('register');
 
+Route::post('/register',[AuthController::class, 'Regist']);
 
 Route::get('/login', [AuthController::class, 'showLogin'])
     ->name('login');

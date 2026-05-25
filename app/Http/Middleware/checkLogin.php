@@ -14,7 +14,7 @@ class checkLogin
     {
         if(!Auth::check()){
             return redirect('/')
-            ->with('login_required','Anda Harus Login terlebih dahulu Sebelum Mengakses Fitur ini');
+            ->with('login_require','Anda Harus Login terlebih dahulu Sebelum Mengakses Fitur ini');
         }
         return $next($request);
     }

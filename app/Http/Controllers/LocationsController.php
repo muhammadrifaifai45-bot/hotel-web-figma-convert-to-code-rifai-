@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 class LocationsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $lokasi_hotel = [
+        $lokasi_hotel = collect([
             [
             'kota'=>'tebet, jakarta selatan',
             'title'=>'HOME SUITES HOTEL MAMAT HOUSE',
@@ -28,8 +28,29 @@ class LocationsController extends Controller
                 'title'=>'HOME SUITES HOTEL SENAYAN JAKARTA',
                 'description'=>'luxury, elegant and Luxury vibes in Senayan Central busines of jakarta',
                 'image'=> 'images/hotel_senayan.jpg'
+            ],
+
+            [
+                'kota'=>'Kintamani, Bali',
+                'title'=>'HOME SUITES HOTEL KINTAMANI BALI',
+                'description'=>'luxury, elegant and Luxury vibes in Pandawa Islands',
+                'image'=> 'images/kintamani.jpg'
             ]
-            ];
+
+            
+          ]);
+
+          $pencarian = $request->pencarian;
+
+          if($pencarian){
+             $lokasi_hotel = $lokasi_hotel->filter(function ($item) use ($pencarian){
+                return str_contains(
+                    strtolower($item['kota']),
+                    strtolower($pencarian)
+                );
+
+             });
+          }
             return view('home', compact('lokasi_hotel'));
     }
 }

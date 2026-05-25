@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Login</title>
+    <title>Register</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -26,19 +26,39 @@
             </h1>
 
             <h2 class="text-6xl font-bold mt-8 leading-tight text-zinc-900">
-                GET STARTED
+                Register
             </h2>
 
             <p class="mt-6 text-zinc-500 text-lg leading-relaxed max-w-[500px]">
                 Welcome to Home Suite Hotel, enjoy luxury hospitality and premium comfort experience.
             </p>
 
-            <!-- FORM -->
-
-            <form method="POST" action="/login" class="mt-12">
+            @if ($errors->any())
+            <div class="mb-5 bg-red-100 border border-red-400 text-red-700 px-5 py-4 rounded-xl">
+        
+                <ul class="list-disc pl-5">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+        
+            </div>
+        @endif
+            
+            <form action="/register" method="POST"  class="mt-12">
 
                 @csrf
 
+
+                <div class="mb-6">
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter your name"
+                        class="w-full h-[65px] rounded-full px-8 bg-white border border-zinc-300 focus:outline-none focus:ring-4 focus:ring-yellow-300 text-lg shadow-sm">
+
+                </div>
                 <!-- EMAIL -->
 
                 <div class="mb-6">
@@ -63,6 +83,16 @@
 
                 </div>
 
+                <div class="mt-6">
+
+                    <input
+                        type="password"
+                        name="password_confirmation"
+                        placeholder="Confirm your password"
+                        class="w-full h-[65px] rounded-full px-8 bg-white border border-zinc-300 focus:outline-none focus:ring-4 focus:ring-yellow-300 text-lg shadow-sm">
+                
+                </div>
+
                 <!-- BUTTON AREA -->
 
                 <div class="flex gap-5 mt-10">
@@ -73,7 +103,7 @@
                         type="submit"
                         class="flex-1 h-[65px] bg-yellow-400 hover:bg-yellow-500 transition-all duration-300 rounded-2xl text-xl font-bold shadow-lg">
 
-                        LOGIN
+                        REGISTER
 
                     </button>
 
@@ -114,7 +144,7 @@
 
                 </div>
 
-                <a href="{{ route('register') }}" class="text-blue-600 underline">Register Acount here</a>
+                
 
             </form>
 

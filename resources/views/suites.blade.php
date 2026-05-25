@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="bg-zinc-100 p-10">
+<div class="bg-zinc-100 p-10 pt-40">
 
     <h1 class="text-center text-3xl font-semibold mb-10">
 

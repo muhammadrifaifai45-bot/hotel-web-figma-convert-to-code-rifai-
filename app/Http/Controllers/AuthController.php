@@ -2,13 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redis;
 use Laravel\Socialite\Facades\Socialite;
-use App\Models\Pengguna;
 
 class AuthController extends Controller
 {
+
+ 
+
+    public function showregister(){
+        return view('register');
+    }
+
+    public function Regist(Request $request){
+        $validated = $request->validate([
+          'name'=> 'required|min:3|max:80',
+          'email'=> 'required|email|unique:penggunas,email',
+          'password'=>'required|min:6|confirmed'
+        ]);
+
+        $user = Pengguna::create([
+            'name'=> $validated['name'],
+            'email'=> $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
+        Auth::login($user);
+        return redirect('/login')
+        ->with('succes', 'Register berhasil akun anda Telah terdaftar silahkan login');
+    }
+
     public function showlogin()
     {
         return view('login');
@@ -52,6 +78,9 @@ class AuthController extends Controller
         return redirect('/');
     }
 
+   
+      
+    
 
 
 

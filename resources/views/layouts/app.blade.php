@@ -119,7 +119,7 @@
 
                             </span>
 
-                            <i class="fa-solid fa-chevron-down text-white-[12px]"></i>
+                    
 
 
 
@@ -168,16 +168,16 @@
     </div>
 
 
-    @if(session('login_required'))
+    @if(session('login_require'))
 
 <div
-    id="loginModal"
+    id="BackTolandingPage"
     class="fixed inset-0 bg-black/60 z-[999]
            flex items-center justify-center">
 
     <div
         class="bg-white w-[420px] rounded-3xl p-8 shadow-2xl
-               text-center animate-bounce">
+               text-center  ">
 
         <!-- ICON -->
 
@@ -189,7 +189,7 @@
 
         </div>
 
-        <!-- TITLE -->
+      
 
         <h1 class="text-2xl font-bold text-gray-800">
 
@@ -197,7 +197,7 @@
 
         </h1>
 
-        <!-- MESSAGE -->
+     {{-- Validasi middleware agar user login terlebih dahulu --}}
 
         <p class="text-gray-500 mt-3 leading-relaxed">
 
@@ -213,11 +213,9 @@
             <!-- CLOSE -->
 
             <button
-                onclick="document.getElementById('loginModal').style.display='none'"
+                onclick="document.getElementById('BackTolandingPage').style.display='none'"
                 class="px-6 py-3 rounded-xl bg-gray-100 hover:bg-gray-200 transition-all">
-
                 Nanti
-
             </button>
 
             <!-- LOGIN -->
